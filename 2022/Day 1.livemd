@@ -27,3 +27,21 @@ input
 end)
 |> Enum.max()
 ```
+
+## Part 2
+
+```elixir
+input
+|> Kino.Input.read()
+|> String.split("\n")
+|> Enum.chunk_by(fn x -> x == "" end)
+|> Enum.filter(fn x -> x !== [""] end)
+|> Enum.map(fn str_arr ->
+  str_arr
+  |> Enum.map(&String.to_integer/1)
+  |> Enum.sum()
+end)
+|> Enum.sort(:desc)
+|> Enum.take(3)
+|> Enum.sum()
+```
