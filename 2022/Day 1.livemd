@@ -5,5 +5,25 @@
 [Link](https://adventofcode.com/2022/day/1)
 
 ```elixir
+Mix.install([
+  {:kino, "~> 0.7.0"}
+])
+```
 
+```elixir
+input = Kino.Input.textarea("Please paste your input file:")
+```
+
+```elixir
+input
+|> Kino.Input.read()
+|> String.split("\n")
+|> Enum.chunk_by(fn x -> x == "" end)
+|> Enum.filter(fn x -> x !== [""] end)
+|> Enum.map(fn str_arr ->
+  str_arr
+  |> Enum.map(&String.to_integer/1)
+  |> Enum.sum()
+end)
+|> Enum.max()
 ```
