@@ -1,0 +1,91 @@
+# Day 2
+
+## 2022 - Day 1
+
+[Link](https://adventofcode.com/2022/day/2)
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.7.0"}
+])
+```
+
+```elixir
+input = Kino.Input.textarea("Please paste your input file:")
+```
+
+```elixir
+defmodule Helper do
+  def decrypt_opponent(choose) do
+    case choose do
+      "A" -> :rock
+      "B" -> :paper
+      "C" -> :scissor
+    end
+  end
+
+  def decrypt_mine(choose) do
+    case choose do
+      "X" -> :rock
+      "Y" -> :paper
+      "Z" -> :scissor
+    end
+  end
+
+  def decrypt_strategy([strategy]) do
+    [opponent, mine] = String.split(strategy, " ")
+    [decrypt_opponent(opponent), decrypt_mine(mine)]
+  end
+
+  def validate_result([_, mine] = guide) do
+    score_by_choose(mine) + do_validate_vs(guide)
+  end
+
+  defp score_by_choose(mine) do
+    case mine do
+      :rock -> 1
+      :paper -> 2
+      :scissor -> 3
+    end
+  end
+
+  defp do_validate_vs([op, mine]) when op == mine, do: 3
+
+  defp do_validate_vs([:rock, mine]) do
+    case mine do
+      :paper -> 6
+      :scissor -> 0
+    end
+  end
+
+  defp do_validate_vs([:paper, mine]) do
+    case mine do
+      :scissor -> 6
+      :rock -> 0
+    end
+  end
+
+  defp do_validate_vs([:scissor, mine]) do
+    case mine do
+      :rock -> 6
+      :paper -> 0
+    end
+  end
+end
+```
+
+```elixir
+input
+|> Kino.Input.read()
+|> String.split("\n")
+|> Enum.chunk_every(1)
+|> Enum.map(&Helper.decrypt_strategy/1)
+|> Enum.map(&Helper.validate_result/1)
+|> Enum.sum()
+```
+
+## Part 2
+
+```elixir
+
+```
